@@ -100,5 +100,33 @@ public class CallManageActivity extends AppCompatActivity {
 
             }
         }
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CALL_PHONE)) {
+
+                Log.i("Ankit", "inner if");
+
+            } else {
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                Log.i("Ankit", "requsted");
+
+
+            }
+        }
     }
-}
+
+
+    }
+
+
+
+

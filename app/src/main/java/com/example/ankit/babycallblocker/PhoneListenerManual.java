@@ -22,9 +22,13 @@ public class PhoneListenerManual extends PhoneStateListener {
     public PhoneListenerManual(Context context) {
         super();
         this.context = context;
+        //onCallStateChanged();
     }
 
     public void onCallStateChanged(int state, String incomingNumber) {
+        Log.i("Ankit", "onCallStateChanged0");
+        super.onCallStateChanged(state, incomingNumber);
+        Log.i("Ankit", "onCallStateChanged");
 
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE:
