@@ -76,7 +76,7 @@ public class CallManageActivity extends AppCompatActivity {
 
 
 
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
+       /* int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.PROCESS_OUTGOING_CALLS);
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -116,6 +116,28 @@ public class CallManageActivity extends AppCompatActivity {
 
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                Log.i("Ankit", "requsted");
+
+
+            }
+        }
+*/
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_PHONE_STATE)) {
+
+                Log.i("Ankit", "inner if");
+
+            } else {
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_PHONE_STATE},
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS);
                 Log.i("Ankit", "requsted");
 

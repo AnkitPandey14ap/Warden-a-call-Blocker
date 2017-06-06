@@ -16,18 +16,17 @@ import java.lang.reflect.Method;
 public class PhoneListenerManual extends PhoneStateListener {
 
     public static Boolean phoneRinging = false;
-    private final Context context;
-
+    Context context;
 
     public PhoneListenerManual(Context context) {
-        super();
         this.context = context;
-        //onCallStateChanged();
     }
 
+
+    @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-        Log.i("Ankit", "onCallStateChanged0");
         super.onCallStateChanged(state, incomingNumber);
+
         Log.i("Ankit", "onCallStateChanged");
 
         switch (state) {
@@ -37,6 +36,7 @@ public class PhoneListenerManual extends PhoneStateListener {
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
                 Log.i("Ankit", "OFFHOOK");
+                endCallIfBlocked(incomingNumber);
                 phoneRinging = false;
                 break;
             case TelephonyManager.CALL_STATE_RINGING:
@@ -47,7 +47,9 @@ public class PhoneListenerManual extends PhoneStateListener {
                 break;
         }
 
+
     }
+
     private void endCallIfBlocked(String outGoingNumber) {
         try {
             // Java reflection to gain access to TelephonyManager's
@@ -61,12 +63,13 @@ public class PhoneListenerManual extends PhoneStateListener {
 
 
                 telephonyService = (ITelephony) m.invoke(tm);
-                telephonyService.silenceRinger();
+              //telephonyService.silenceRinger();
                 telephonyService.endCall();
 
 
 
         } catch (Exception e) {
+            Log.i("Ankit", "error" + e);
             e.printStackTrace();
         }
     }

@@ -17,20 +17,12 @@ public class ServiceReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
         Log.i("Ankit", "onReceive");
-        this.context = context;
-        endCallIfBlocked();
 
-
-
-
-
-
-
-        /*
         PhoneListenerManual phoneListener = new PhoneListenerManual(context);
-          telephony = (TelephonyManager) context
+        telephony = (TelephonyManager) context
                 .getSystemService(Context.TELEPHONY_SERVICE);
-*/
+        telephony.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
     }
 
     /*public void onDestroy() {
