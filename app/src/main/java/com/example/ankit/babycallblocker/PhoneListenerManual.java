@@ -30,9 +30,13 @@ public class PhoneListenerManual extends PhoneStateListener {
 
         Log.i("Ankit", "onCallStateChanged");
 
+
+
         switch (state) {
+
+
             case TelephonyManager.CALL_STATE_IDLE:
-                Log.i("Ankit", "IDLE");
+                Log.i("Ankit", "IDLE "+incomingNumber);
                 endCallIfBlocked(incomingNumber);
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
@@ -48,7 +52,7 @@ public class PhoneListenerManual extends PhoneStateListener {
 
     }
 
-    private void endCallIfBlocked(String outGoingNumber) {
+    public void endCallIfBlocked(String outGoingNumber) {
         Log.i("Ankit", "1");
         try {
             Log.i("Ankit", "2");
@@ -68,20 +72,20 @@ public class PhoneListenerManual extends PhoneStateListener {
             Log.i("Ankit", "6");
 
             com.android.internal.telephony.ITelephony telephonyService = (ITelephony) m.invoke(tm);
-            Log.i("Ankit", "6");
+            Log.i("Ankit", "7");
 
                 telephonyService = (ITelephony) m.invoke(tm);
-            Log.i("Ankit", "7");
+            Log.i("Ankit", "8");
 
             //telephonyService.silenceRinger();
                 telephonyService.endCall();
-            Log.i("Ankit", "8");
+            Log.i("Ankit", "9");
 
 
         } catch (Exception e) {
             Log.i("Ankit", "error" + e);
             e.printStackTrace();
         }
-        Log.i("Ankit", "9");
+        Log.i("Ankit", "10");
     }
 }
