@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -35,8 +38,6 @@ public class CallManageActivity extends AppCompatActivity {
 
         outgoingSwitch = (Switch) findViewById(R.id.outgoingSwitch);
         incomingSwitch = (Switch) findViewById(R.id.incomingSwitch);
-
-
 
 
         SharedPreferences sp = getSharedPreferences("OutgoingSwitchIsChecked", MODE_PRIVATE);
@@ -111,21 +112,17 @@ public class CallManageActivity extends AppCompatActivity {
         });
 
 
-
-
-
-        /*int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.PROCESS_OUTGOING_CALLS);*/
-
-
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.PROCESS_OUTGOING_CALLS)
+                Manifest.permission.PROCESS_OUTGOING_CALLS) + ContextCompat
+                .checkSelfPermission(this,
+                        Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.PROCESS_OUTGOING_CALLS)) {
+                    Manifest.permission.PROCESS_OUTGOING_CALLS) || ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
 
                 Log.i("Ankit", "inner if");
 
@@ -133,7 +130,7 @@ public class CallManageActivity extends AppCompatActivity {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS,Manifest.permission.CALL_PHONE},
+                        new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS,Manifest.permission.CALL_PHONE,Manifest.permission.READ_CONTACTS},
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS);
                 Log.i("Ankit", "requsted outgoing call");
 
@@ -183,6 +180,8 @@ public class CallManageActivity extends AppCompatActivity {
 
             }
         }
+
+
 
 
         askAutoStartPermission();
