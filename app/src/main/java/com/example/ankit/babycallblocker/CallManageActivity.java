@@ -1,19 +1,27 @@
 package com.example.ankit.babycallblocker;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.logging.Logger;
+
 public class CallManageActivity extends AppCompatActivity {
+    private static final String TAG = "Ankit";
     Switch outgoingSwitch;
     Switch incomingSwitch;
 
@@ -27,6 +35,8 @@ public class CallManageActivity extends AppCompatActivity {
 
         outgoingSwitch = (Switch) findViewById(R.id.outgoingSwitch);
         incomingSwitch = (Switch) findViewById(R.id.incomingSwitch);
+
+
 
 
         SharedPreferences sp = getSharedPreferences("OutgoingSwitchIsChecked", MODE_PRIVATE);
@@ -173,10 +183,60 @@ public class CallManageActivity extends AppCompatActivity {
 
             }
         }
-    }
+
+
+        askAutoStartPermission();
 
 
     }
+
+    private void askAutoStartPermission() {
+        String xiaomi = "Xiaomi";
+        String deviceManufacturer = android.os.Build.MANUFACTURER;
+
+        final String CALC_PACKAGE_NAME = "com.miui.securitycenter";
+        final String CALC_PACKAGE_ACITIVITY = "com.miui.permcenter.autostart.AutoStartManagementActivity";
+        if (deviceManufacturer.equalsIgnoreCase(xiaomi)) {
+            AlertDialog.Builder alertDialog= new AlertDialog.Builder(CallManageActivity.this);
+            alertDialog.setTitle("Make sure Warden have Autostart permission");
+            alertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    try {
+                        Intent intent = new Intent();
+                        intent.setComponent(new ComponentName(CALC_PACKAGE_NAME, CALC_PACKAGE_ACITIVITY));
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Log.i(TAG, "Failed to launch AutoStart Screen ", e);
+                    } catch (Exception e) {
+                        Log.i(TAG, "Failed to launch AutoStart Screen ");
+                    }
+
+                }
+            });
+            alertDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(getBaseContext(), "cancel ' comment same as ok'", Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
+            alertDialog.show();
+
+        }
+
+
+
+    }
+
+
+}
+
 
 
 

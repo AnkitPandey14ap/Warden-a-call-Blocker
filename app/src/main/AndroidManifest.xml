@@ -29,6 +29,7 @@
         <receiver android:name=".IncomingCallReceiver"
             android:enabled="false">
             <intent-filter>
+                <action android:name="fromservice"/>
                 <action android:name="android.intent.action.PHONE_STATE" />
 
             </intent-filter>
