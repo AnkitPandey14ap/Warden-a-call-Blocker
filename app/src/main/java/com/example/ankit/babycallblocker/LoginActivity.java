@@ -8,12 +8,17 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.github.orangegangsters.lollipin.lib.managers.AppLock;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String MY_PREFS_NAME = "password";
     String t="Ankit";
     EditText passwordEditText;
     String enteredPswd;
+
+    private static final int REQUEST_CODE_ENABLE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,5 +62,22 @@ public class LoginActivity extends AppCompatActivity {
     public void changePasswordActivity(View v)
     {
         Log.i(t, "change passwordclicked");
+
+        Intent intent = new Intent(LoginActivity.this, CustomPinActivity.class);
+
+        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+        startActivityForResult(intent, REQUEST_CODE_ENABLE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case REQUEST_CODE_ENABLE:
+                Toast.makeText(this, "PinCode enabled", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

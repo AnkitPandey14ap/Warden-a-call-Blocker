@@ -30,8 +30,6 @@ public class PhoneListenerManual extends PhoneStateListener {
 
         Log.i("Ankit", "onCallStateChanged");
 
-
-
         switch (state) {
 
 
@@ -53,39 +51,28 @@ public class PhoneListenerManual extends PhoneStateListener {
     }
 
     public void endCallIfBlocked(String outGoingNumber) {
-        Log.i("Ankit", "1");
+        Log.i("Ankit", "endCallIfBlocked method");
         try {
-            Log.i("Ankit", "2");
-            // Java reflection to gain access to TelephonyManager's
-            // ITelephony getter
 
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            Log.i("Ankit", "3");
 
             Class<?> c = Class.forName(tm.getClass().getName());
-            Log.i("Ankit", "4");
 
             Method m = c.getDeclaredMethod("getITelephony");
-            Log.i("Ankit", "5");
 
             m.setAccessible(true);
-            Log.i("Ankit", "6");
 
             com.android.internal.telephony.ITelephony telephonyService = (ITelephony) m.invoke(tm);
-            Log.i("Ankit", "7");
 
                 telephonyService = (ITelephony) m.invoke(tm);
-            Log.i("Ankit", "8");
 
             //telephonyService.silenceRinger();
                 telephonyService.endCall();
-            Log.i("Ankit", "9");
 
 
         } catch (Exception e) {
             Log.i("Ankit", "error" + e);
             e.printStackTrace();
         }
-        Log.i("Ankit", "10");
     }
 }

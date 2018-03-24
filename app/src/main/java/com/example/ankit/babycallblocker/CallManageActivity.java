@@ -1,9 +1,9 @@
 package com.example.ankit.babycallblocker;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,11 +41,27 @@ public class CallManageActivity extends AppCompatActivity {
                     Toast.makeText(CallManageActivity.this, "Start", Toast.LENGTH_SHORT).show();
                     ed.putBoolean("OutgoingSwitchIsChecked", true);
                     ed.commit();
+
+
+                    PackageManager pm  = CallManageActivity.this.getPackageManager();
+                    ComponentName componentName = new ComponentName(CallManageActivity.this, OutgoingCallReceiver.class);
+                    pm.setComponentEnabledSetting(componentName,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
+
+
+
                 }
                 else {
                     Toast.makeText(CallManageActivity.this, "Stop", Toast.LENGTH_SHORT).show();
                     ed.putBoolean("OutgoingSwitchIsChecked", false);
                     ed.commit();
+
+                    PackageManager pm  = CallManageActivity.this.getPackageManager();
+                    ComponentName componentName = new ComponentName(CallManageActivity.this, OutgoingCallReceiver.class);
+                    pm.setComponentEnabledSetting(componentName,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP);
+
+
                 }
             }
         });
@@ -63,11 +79,23 @@ public class CallManageActivity extends AppCompatActivity {
                     Toast.makeText(CallManageActivity.this, "Start", Toast.LENGTH_SHORT).show();
                     ed1.putBoolean("IncomingSwitchIsChecked", true);
                     ed1.commit();
+
+                    PackageManager pm  = CallManageActivity.this.getPackageManager();
+                    ComponentName componentName = new ComponentName(CallManageActivity.this, IncomingCallReceiver.class);
+                    pm.setComponentEnabledSetting(componentName,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
+
                 }
                 else {
                     Toast.makeText(CallManageActivity.this, "Stop", Toast.LENGTH_SHORT).show();
                     ed1.putBoolean("IncomingSwitchIsChecked", false);
                     ed1.commit();
+
+                    PackageManager pm  = CallManageActivity.this.getPackageManager();
+                    ComponentName componentName = new ComponentName(CallManageActivity.this, IncomingCallReceiver.class);
+                    pm.setComponentEnabledSetting(componentName,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP);
+
                 }
             }
         });
@@ -76,8 +104,10 @@ public class CallManageActivity extends AppCompatActivity {
 
 
 
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.PROCESS_OUTGOING_CALLS);
+        /*int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.PROCESS_OUTGOING_CALLS);*/
+
+
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.PROCESS_OUTGOING_CALLS)
@@ -93,7 +123,7 @@ public class CallManageActivity extends AppCompatActivity {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS},
+                        new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS,Manifest.permission.CALL_PHONE},
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS);
                 Log.i("Ankit", "requsted outgoing call");
 

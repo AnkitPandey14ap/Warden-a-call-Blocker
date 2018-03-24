@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
 
+
         </activity>
         <activity android:name=".CallManageActivity">
             <intent-filter>
@@ -25,13 +26,27 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ServiceReceiver">
-            android:enabled="false"
-        <intent-filter>
-            <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
-        </intent-filter>
-    </receiver>
+        <receiver android:name=".IncomingCallReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".OutgoingCallReceiver"
+            android:enabled="false">
+
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".CustomPinActivity" >
+
+        </activity >
+
 </application>
 
 </manifest>
