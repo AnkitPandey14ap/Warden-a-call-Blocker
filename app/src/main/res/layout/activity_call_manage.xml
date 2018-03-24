@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Block Calls"
+                android:text="Block Unkown Calls"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
@@ -36,7 +36,7 @@
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All Outgoing"
+                    android:text="Outgoing calls"
                     android:layout_weight="3"
                     android:layout_marginLeft="7dp"
                     android:textStyle="bold"/>
@@ -62,7 +62,7 @@
                     android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All Incoming"
+                    android:text="Incoming calls"
                     android:layout_weight="3"
                     android:layout_marginLeft="7dp"
                     android:textStyle="bold"/>

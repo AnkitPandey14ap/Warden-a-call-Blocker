@@ -221,7 +221,6 @@ public class CallManageActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // TODO Auto-generated method stub
-                    Toast.makeText(getBaseContext(), "cancel ' comment same as ok'", Toast.LENGTH_SHORT).show();
 
 
                 }
