@@ -181,9 +181,6 @@ public class CallManageActivity extends AppCompatActivity {
             }
         }
 
-
-
-
         askAutoStartPermission();
 
 

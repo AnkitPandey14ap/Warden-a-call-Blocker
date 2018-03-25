@@ -3,7 +3,10 @@ package com.example.ankit.babycallblocker;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -11,8 +14,10 @@ import android.util.Log;
 import com.android.internal.telephony.ITelephony;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public class IncomingCallReceiver extends BroadcastReceiver {
+    private static final String TAG = "Ankit";
     Context context;
     String savedNumber;
 
@@ -29,9 +34,12 @@ public class IncomingCallReceiver extends BroadcastReceiver {
                 String phoneNumber = extras
                         .getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 Log.w("Ankit", phoneNumber);
-
-                PhoneListenerManual phoneListenerManual = new PhoneListenerManual(context);
-                phoneListenerManual.endCallIfBlocked(phoneNumber);
+                ArrayList<String> numberList = new ArrayList<>();
+                numberList.add(phoneNumber);
+                if(compareNo(numberList)){
+                    PhoneListenerManual phoneListenerManual = new PhoneListenerManual(context);
+                    phoneListenerManual.endCallIfBlocked(phoneNumber);
+                }
             }
         }
 
@@ -53,7 +61,42 @@ public class IncomingCallReceiver extends BroadcastReceiver {
 
         }
 */
+
+
     }
+
+    public boolean compareNo(ArrayList<String> some_num){
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+        Cursor people = context.getContentResolver().query(uri, projection, null, null, null);
+
+        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        int j_count=0;
+        String number;
+        people.moveToFirst();
+        do {
+
+            String name   = people.getString(indexName);
+            number = people.getString(indexNumber);
+
+            Log.i(TAG, "compareNo: "+number+" Calling no is "+some_num.get(0));
+
+            if (some_num.contains(number)){
+                return true;
+            }
+
+            j_count++;
+
+
+            // Do work...
+        } while (people.moveToNext());
+        return false;
+    }
+
+
 
 
 }
